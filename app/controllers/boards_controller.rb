@@ -11,23 +11,22 @@ class BoardsController < ApplicationController
     end
 
     def create
-        if session[:user_id] != nil
-            board = Board.create!(board_params.merge(:user_id => session[:user_id]))
-            render json: board, includes: ['board.user'], status: :created
-        else
-            render json: { error: "Not authorized" }, status: :unauthorized
+        board = Board.create!(board_params.merge(:user_id => session[:user_id]))
+        params[:options].map do |option|
+            Option.create!(name: option[:name], score: 0, board_id: board.id, option_image: option[:option_image])
         end
+        render json: board, includes: ['board.user'], status: :created
     end
 
     def update
         board = board_find
-        Board.update!(board_params)
+        board.update!(board_params)
         render json: board
     end
 
     def destroy
         board = board_find
-        Board.destroy
+        board.destroy
         head :no_content
     end
 
@@ -38,6 +37,6 @@ class BoardsController < ApplicationController
     end
 
     def board_params
-        params.permit(:title, :description, :category, :end_date, :tags, :user_id)
+        params.permit(:title, :description, :category, :end_date, :user_id, tags: [])
     end
 end

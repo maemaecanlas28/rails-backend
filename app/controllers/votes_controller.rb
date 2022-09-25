@@ -11,7 +11,6 @@ class VotesController < ApplicationController
     end
 
     def create
-        puts params
         vote = Vote.create!(vote_params.merge(:user_id => session[:user_id]))
         array_size = vote.rankings.length
         vote.rankings.map.with_index do |ranking, idx| 
@@ -41,6 +40,7 @@ class VotesController < ApplicationController
     end
 
     def vote_params
+        # rankings is an array of OPTION IDs, NOT indeces!
         params.permit(:board_id, rankings: [])
     end
 end

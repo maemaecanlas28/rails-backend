@@ -12,11 +12,17 @@ class OptionsController < ApplicationController
 
     def create
         if session[:user_id] != nil
-            option = Option.create!(option_params.merge(:user_id => session[:user_id]))
-            render json: option, includes: ['option.user'], status: :created
+            option = Option.create!(option_params)
+            render json: option, status: :created
         else
             render json: { error: "Not authorized" }, status: :unauthorized
         end
+    end
+
+    def update
+        option = option_find
+        option.update!(option_params)
+        render json: option
     end
 
     private
@@ -26,6 +32,6 @@ class OptionsController < ApplicationController
     end
 
     def option_params
-        params.permit(:name, :score, :board_id)
+        params.permit(:name, :score, :option_image, :board_id)
     end
 end

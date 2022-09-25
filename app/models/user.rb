@@ -3,6 +3,7 @@ class User < ApplicationRecord
     has_many :boards
     has_many :comments
     has_many :votes
+    has_one_attached :avatar
 
     has_secure_password
 

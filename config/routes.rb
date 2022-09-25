@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   
   resources :followers, only: [:index, :show, :destroy]
   resources :comments
-  resources :options, only: [:index, :show, :create]
-  resources :votes, only: [:index, :show, :create, :destroy]
+  resources :options, only: [:index, :show, :create, :update]
+  resources :votes
   resources :boards
   resources :users
 
