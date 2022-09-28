@@ -20,14 +20,22 @@ class BoardsController < ApplicationController
 
     def update
         board = board_find
-        board.update!(board_params)
-        render json: board
+        if session[:user_id] == board.user.id
+            board.update!(board_params)
+            render json: board
+        else
+            render json: { error: "Not authorized" }, status: :unprocessable_entity
+        end      
     end
 
     def destroy
         board = board_find
-        board.destroy
-        head :no_content
+        if session[:user_id] == board.user.id
+            board.destroy
+            head :no_content
+        else
+            render json: { error: "Not authorized" }, status: :unprocessable_entity
+        end
     end
 
     private
