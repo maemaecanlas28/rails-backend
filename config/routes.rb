@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
   get "/following/:id", to: "followers#following"
   post "/follow", to: "followers#follow"
+  delete "/unfollow", to: "followers#unfollow"
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

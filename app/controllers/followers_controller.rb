@@ -26,6 +26,12 @@ class FollowersController < ApplicationController
         render json: following, status: :ok
     end
 
+    def unfollow
+        following = Follower.find_by(:follower_id => session[:user_id], :user_id => params[:user_id])
+        following.destroy
+        head :no_content
+    end
+
     private
 
     def follower_find
