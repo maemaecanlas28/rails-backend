@@ -6,8 +6,8 @@ class FollowersController < ApplicationController
     end
 
     def show
-        follower = follower_find
-        render json: follower
+        followers = Follower.where(["user_id = :id", { id: params[:id] }])
+        render json: followers
     end
 
     def follow
@@ -22,7 +22,7 @@ class FollowersController < ApplicationController
     end
 
     def following
-        following = Follower.where(follower_id: session[:user_id])
+        following = Follower.where(follower_id: params[:id])
         render json: following, status: :ok
     end
 
