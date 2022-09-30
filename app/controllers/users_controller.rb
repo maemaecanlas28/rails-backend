@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
     def show
         user = user_find
-        render json: user 
+        render json: user
     end
 
     def create
