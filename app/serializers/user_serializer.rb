@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
 
-  attributes :id, :username, :name, :email, :date_of_birth, :gender, :avatar, :bio, :followers, :followings
+  attributes :id, :username, :name, :email, :date_of_birth, :gender, :avatar, :bio, :followers, :followings, :votes
 
   def avatar
     object.avatar.key.to_s if object.avatar.attached?

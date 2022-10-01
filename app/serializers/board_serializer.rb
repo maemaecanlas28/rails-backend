@@ -1,7 +1,6 @@
 class BoardSerializer < ActiveModel::Serializer
-  attributes :id, :category, :description, :title, :end_date, :tags, :vote_count
+  attributes :id, :category, :description, :title, :end_date, :tags, :vote_count, :user
 
-  belongs_to :user
   has_many :comments
   has_many :options
 
