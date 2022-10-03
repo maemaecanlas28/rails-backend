@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get "/following/:id", to: "followers#following"
   post "/follow", to: "followers#follow"
   delete "/unfollow", to: "followers#unfollow"
+  get "/boards/user/:user_id", to: "boards#boards_by_users"
+  get "/boards/ranked/:user_id", to: "boards#boards_ranked"
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

@@ -10,6 +10,20 @@ class BoardsController < ApplicationController
         render json: board
     end
 
+    def boards_by_users
+        boards = Board.where(user_id: boards_by_users_params[:user_id])
+        render json: boards
+    end 
+
+    def boards_ranked
+        rankings = Vote.where(user_id: boards_by_users_params[:user_id])
+        board_ids = rankings.map do |ranking|
+            ranking.board_id
+        end
+        boards = Board.where(id: board_ids)
+        render json: boards
+    end
+
     def create
         board = Board.create!(board_params.merge(:user_id => session[:user_id]))
         params[:options].map do |option|
@@ -46,5 +60,9 @@ class BoardsController < ApplicationController
 
     def board_params
         params.permit(:title, :description, :category, :end_date, :user_id, tags: [])
+    end
+
+    def boards_by_users_params
+        params.permit(:user_id)
     end
 end
