@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :followers, only: [:index, :show, :destroy]
   resources :comments
   resources :options, only: [:index, :show, :create, :update]
-  resources :votes
   resources :boards
   resources :users
 
@@ -15,7 +14,11 @@ Rails.application.routes.draw do
   post "/follow", to: "followers#follow"
   delete "/unfollow", to: "followers#unfollow"
   get "/boards/user/:user_id", to: "boards#boards_by_users"
-  get "/boards/ranked/:user_id", to: "boards#boards_ranked"
+  get "/boards/ranked/:user_id", to: "boards#boards_ranked" 
+  get "/votes/toprankers", to: "votes#toprankers"
+  get "/votes/topcreators", to: "votes#topcreators"
+
+  resources :votes
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-    skip_before_action :authorize, only: [:index, :show, :destroy]
+    skip_before_action :authorize, only: [:index, :show, :destroy, :toprankers]
 
     def index
         render json: Vote.all
@@ -8,6 +8,65 @@ class VotesController < ApplicationController
     def show
         vote = vote_find
         render json: vote
+    end
+
+    def toprankers 
+        rankers = Vote.all
+        .select("user_id, count(*) as num_rows")
+        .group(:user_id)
+        .order("num_rows DESC")
+        .limit(3)
+        res = []
+        rankers.map do |ranker|
+            user = User.find(ranker.user_id)
+            user_info = {"user_id" => user.id, "username" => user.username, "count" => ranker.num_rows}
+            if user.avatar.attached? 
+                user_info["avatar"] = user.avatar.key.to_s
+            end
+            res.push(user_info)
+        end
+        render json: res
+    end
+
+    def toprankers 
+        rankers = Vote.all
+        .select("user_id, count(*) as num_rows")
+        .group(:user_id)
+        .order("num_rows DESC")
+        .limit(3)
+        res = []
+        rankers.map do |ranker|
+            user = User.find(ranker.user_id)
+            user_info = {"user_id" => user.id, "username" => user.username, "count" => ranker.num_rows}
+            if user.avatar.attached? 
+                user_info["avatar"] = user.avatar.key.to_s
+            end
+            res.push(user_info)
+        end
+        render json: res
+    end
+
+    def topcreators
+        results = Vote.find_by_sql(
+            "SELECT boards.user_id, sum(tally.num_votes) as total
+            FROM boards, (SELECT board_id, count(*) as num_votes
+                        FROM votes
+                        GROUP BY board_id) as tally
+            where boards.id = tally.board_id
+            GROUP BY boards.user_id
+            ORDER BY total desc
+            limit 3"
+        )
+        final = []
+        results.map do |result|
+            user = User.find(result.user_id)
+            user_info = {"user_id" => user.id, "username" => user.username, "count" => result.total}
+            if user.avatar.attached? 
+                user_info["avatar"] = user.avatar.key.to_s
+            end
+            final.push(user_info)
+        end
+        render json: final
     end
 
     def create
