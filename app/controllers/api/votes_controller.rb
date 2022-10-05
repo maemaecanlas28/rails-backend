@@ -1,5 +1,5 @@
-class VotesController < ApplicationController
-    skip_before_action :authorize, only: [:index, :show, :destroy, :toprankers]
+class Api::VotesController < ApplicationController
+    skip_before_action :authorize, only: [:index, :show, :destroy, :toprankers, :topcreators]
 
     def index
         render json: Vote.all

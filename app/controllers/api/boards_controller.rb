@@ -1,4 +1,4 @@
-class BoardsController < ApplicationController
+class Api::BoardsController < ApplicationController
     skip_before_action :authorize, only: [:index, :show]
 
     def index

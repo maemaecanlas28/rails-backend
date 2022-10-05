@@ -20,8 +20,7 @@ Rails.application.routes.draw do
     get "/votes/topcreators", to: "votes#topcreators"
 
     resources :votes
-    
-end
+  end
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
