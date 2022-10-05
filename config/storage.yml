@@ -17,8 +17,18 @@ local:
 # Remember not to checkin your GCS keyfile to a repository
 google:
   service: GCS
+  credentials:
+    type: "service_account"
+    project_id: "double-basis-363419"
+    private_key_id: <%= Rails.application.credentials.dig(:gcs, :private_key_id) %>
+    private_key: <%= Rails.application.credentials.dig(:gcs, :private_key).dump %>
+    client_email: "capstoneproject2022@double-basis-363419.iam.gserviceaccount.com"
+    client_id: "101487253705675528343"
+    auth_uri: "https://accounts.google.com/o/oauth2/auth"
+    token_uri: "https://accounts.google.com/o/oauth2/token"
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+    client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/capstoneproject2022%40double-basis-363419.iam.gserviceaccount.com"
   project: ranktogether-capstone
-  credentials: <%= Rails.root.join("config/secrets/capstoneproject.json") %>
   bucket: ranktogether-images
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
@@ -28,7 +38,7 @@ google:
 #   storage_access_key: <%= Rails.application.credentials.dig(:azure_storage, :storage_access_key) %>
 #   container: your_container_name
 
-# mirror:
+# mirror:ra
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
