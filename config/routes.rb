@@ -1,24 +1,27 @@
 Rails.application.routes.draw do
+  namespace :api do
   
-  resources :followers, only: [:index, :show, :destroy]
-  resources :comments
-  resources :options, only: [:index, :show, :create, :update]
-  resources :boards
-  resources :users
+    resources :followers, only: [:index, :show, :destroy]
+    resources :comments
+    resources :options, only: [:index, :show, :create, :update]
+    resources :boards
+    resources :users
 
-  get "/me", to: "sessions#show"
-  post "/signup", to: "users#create"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
-  get "/following/:id", to: "followers#following"
-  post "/follow", to: "followers#follow"
-  delete "/unfollow", to: "followers#unfollow"
-  get "/boards/user/:user_id", to: "boards#boards_by_users"
-  get "/boards/ranked/:user_id", to: "boards#boards_ranked" 
-  get "/votes/toprankers", to: "votes#toprankers"
-  get "/votes/topcreators", to: "votes#topcreators"
+    get "/me", to: "sessions#show"
+    post "/signup", to: "users#create"
+    post "/login", to: "sessions#create"
+    delete "/logout", to: "sessions#destroy"
+    get "/following/:id", to: "followers#following"
+    post "/follow", to: "followers#follow"
+    delete "/unfollow", to: "followers#unfollow"
+    get "/boards/user/:user_id", to: "boards#boards_by_users"
+    get "/boards/ranked/:user_id", to: "boards#boards_ranked" 
+    get "/votes/toprankers", to: "votes#toprankers"
+    get "/votes/topcreators", to: "votes#topcreators"
 
-  resources :votes
+    resources :votes
+    
+end
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
