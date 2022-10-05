@@ -18,7 +18,7 @@ class Api::FollowersController < ApplicationController
     def destroy
         follower = Follower_find
         follower.destroy
-        head :no_content
+        head :no_content 
     end
 
     def following
