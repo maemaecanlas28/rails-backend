@@ -28,24 +28,6 @@ class Api::VotesController < ApplicationController
         render json: res
     end
 
-    def toprankers 
-        rankers = Vote.all
-        .select("user_id, count(*) as num_rows")
-        .group(:user_id)
-        .order("num_rows DESC")
-        .limit(3)
-        res = []
-        rankers.map do |ranker|
-            user = User.find(ranker.user_id)
-            user_info = {"user_id" => user.id, "username" => user.username, "count" => ranker.num_rows}
-            if user.avatar.attached? 
-                user_info["avatar"] = user.avatar.key.to_s
-            end
-            res.push(user_info)
-        end
-        render json: res
-    end
-
     def topcreators
         results = Vote.find_by_sql(
             "SELECT boards.user_id, sum(tally.num_votes) as total
